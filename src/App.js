@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect, Component } from 'react';
+import ReactSearchBox from 'react-search-box'
 import './App.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-function App() {
+class Form extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state={
+        data:''
+      }
+        this.updateState = this.updateState.bind(this);
+    }
+
+    updateState = (event) => {
+        let nam = event.target.name;
+        let val = event.target.value;
+        this.setState({[nam]: val});
+    }
+
+  render() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+      <div className="main">
+      <form  method="post">
+      <div className="row_main">
+      <ReactSearchBox
+        name="name"
+        placeholder="Enter Company Name"
+        value={this.data}
+        onchange={this.updateState}
+        />
+      </div>
+      <div className="row" >
+        <button className="but" ><FontAwesomeIcon icon={faSearch} size="lg" color="white"/></button>
+      </div></form>
+      </div>
   );
 }
+}
 
-export default App;
+export default Form;

@@ -1,0 +1,20 @@
+<!DOCTYPE html5>
+<html>
+ <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='apps.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ </head>
+    <body>
+            <form  action="{{ url_for('result') }}" method="post" >
+            <div>
+            <input
+              name="name"
+              size=40
+              placeholder="Enter Company Name"
+              />
+            </div>
+            <div >
+              <button ><i class="fa fa-search fa-lg"></i></button>
+            </div></form>
+    </body>
+</html>
