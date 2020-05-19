@@ -1,6 +1,12 @@
 <html> 
+	<head>
+		<link rel="stylesheet" href="{{ url_for('static', filename='apps.css') }}">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	 </head>
 <body> 
-	<h1>{{ msg }}!</h1> 
-	<img src={{ name }} alt="Chart" height="42" width="42">
+	<div class="main">
+	<p class="head">{{ msg }}</p> 
+	<img src={{name}}  height="500" width="800">
+	</div>>
 </body> 
 </html> 

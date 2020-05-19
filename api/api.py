@@ -13,9 +13,10 @@ from sklearn.metrics import classification_report, confusion_matrix, accuracy_sc
 from sklearn import metrics
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVR
+from matplotlib.pyplot import figure
 import warnings                   # To ignore the warnings 
 warnings.filterwarnings("ignore")
-plt.style.use('fivethirtyeight')
+plt.style.use('dark_background')
 plt.show()
 
 app = Flask(__name__)
@@ -42,13 +43,14 @@ def result():
 		df_vwap = df[['Date','VWAP']]
 		df_vwap['Date'] = df_vwap['Date'].apply(pd.to_datetime)
 		name=df['Symbol'][1]
-		plt.figure(figsize=(16,8)) 
+		fig=plt.figure(figsize=(16,8)) 
 		plt.plot(df_vwap['VWAP'], label='VWAP') 
 		plt.title('VWAP visualization for the company : '+name) 
 		plt.xlabel("Time(year)") 
 		plt.ylabel("Volume Weighted Average Price") 
 		plt.legend(loc='best')
-		return render_template("result.html",name=plt.plot(df_vwap['VWAP'], label='VWAP'),msg=msg ) 
+		fig.savefig('static/images/'+name+'1.png')
+		return render_template("result.html",msg=msg,name="static/images/"+name+"1.png")
 	else:
 		msg="The provided company data is not available"
 		return render_template("notavail.html",msg=msg)
