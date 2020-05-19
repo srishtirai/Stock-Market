@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
  </head>
     <body>
+            <div class="searchbar">
             <form  action="{{ url_for('result') }}" method="post" >
             <div>
             <input
@@ -16,8 +17,17 @@
             <div >
               <button ><i class="fa fa-search fa-lg"></i></button>
             </div></form>
+          </div>
             <div>
-              {{company}}
+              <div class="sidenav">
+                {%for i in range(0, len)%} 
+
+                <a >{{files[i][:-4]}}
+                  <!-- {{data[i]['Open']}} -->
+                </a> 
+
+                {%endfor%} 
+              </div>      
             </div>
     </body>
 </html>

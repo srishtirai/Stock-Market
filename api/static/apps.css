@@ -1,14 +1,16 @@
 body {
   height: 100%;
   width: 100%;
-  position: relative;
-  background-color:#282c34;
+  /* position: relative; */
+  background-color:black;
   position: fixed;  
-  text-align: center;
 }
-
-div{
+.searchbar{
+ text-align: center;
+} 
+form div{
   display: inline-block;
+  float:none;
 }
 input{
   font-size: 20px;
@@ -20,7 +22,7 @@ input{
 }
 
 button{
-  background-color: #282c34;
+  background-color: black;
   border: none;
   padding: 10px 10px;
   text-align: center;
@@ -28,3 +30,55 @@ button{
   margin: 4px 2px;
   color: aliceblue;
 } 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: #888; 
+  height: 5;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+.sidenav {
+  height: 97%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: black;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color:rgb(134, 255, 104);
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+.scrollable-element {
+  scrollbar-color: dark;
+}
+/* .main {
+  margin-left: 160px; 
+  font-size: 28px; 
+  padding: 0px 10px;
+} */
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
