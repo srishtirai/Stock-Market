@@ -58,18 +58,21 @@ def result():
 		trades=df['Trades'][l]
 		turn=df['Turnover'][l]/1000000000
 		date=df['Date'][l]
-		fig, ax = plt.subplots()
-		ax.plot(df_vwap.loc['2020-4', 'VWAP'], linestyle='-')
+		fig1, ax = plt.subplots(figsize=(20,8))
+		ax.plot(df_vwap.loc['2020-01-20':'2020-01-25', 'VWAP'], linestyle='-')
 		plt.yticks([])
-		plt.xticks(fontsize=5)
-		# fig=plt.figure(figsize=(16,8)) 
-		# plt.title('Yearly Mean VWAP for '+name)
-		# plt.plot(df_vwap.loc['VWAP'], label='VWAP') 
-		# plt.title('VWAP visualization for the company : '+name) 
-		# plt.xlabel("Time(year)") 
-		# plt.ylabel("Volume Weighted Average Price") 
-		# plt.legend(loc='best')
-		fig.savefig('static/images/'+name+'1.png')
+		plt.xticks(fontsize=16)
+		plt.legend(loc='best')
+		fig1.savefig('static/images/'+name+'1.png')
+		fig2, ax = plt.subplots(figsize=(20,8))
+		ax.plot(df_vwap.loc['2020-3':'2020-4', 'VWAP'], linestyle='-')
+		fig2.savefig('static/images/'+name+'2.png')
+		fig3, ax = plt.subplots(figsize=(20,8))
+		ax.plot(df_vwap.loc['2020', 'VWAP'], linestyle='-')
+		fig3.savefig('static/images/'+name+'3.png')
+		fig4, ax = plt.subplots(figsize=(20,8))
+		ax.plot(df_vwap['VWAP'], linestyle='-')
+		fig4.savefig('static/images/'+name+'4.png')
 		return render_template("result.html",msg=open,name=name,turn=turn,open=open,close=close,prev=prev,high=high,low=low,vol=volume,trades=trades,img="static/images/"+name+"1.png")
 	else:
 		msg="The provided company data is not available"

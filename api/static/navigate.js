@@ -1,5 +1,5 @@
 function changeImage(x) {
-    for(i=1;i<6;i++){
+    for(i=1;i<5;i++){
         if(((document.getElementById(i).getAttribute("class"))=="active")&&i!=x)
             document.getElementById(i).setAttribute("class","not");
     }

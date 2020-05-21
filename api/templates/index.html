@@ -17,13 +17,14 @@
             <div >
               <button ><i class="fa fa-search fa-lg"></i></button>
             </div></form>
+            <div>{msg}</div>
           </div>
             <div>
               <div class="sidenav">
                 {%for i in range(0, len)%} 
 
-                <a >{{files[i][:-4]}}
-                  <!-- {{data[i]['Open']}} -->
+                <a  >{{files[i][:-4]}}
+
                 </a> 
 
                 {%endfor%} 
