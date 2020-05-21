@@ -47,12 +47,6 @@ button{
   background: #555; 
 }
 
-.head{
-  font-size: 50px;
-  text-align: center;
-  color: aliceblue;
-}
-
 .sidenav {
   height: 97%;
   width: 200px;
@@ -79,13 +73,62 @@ button{
 .scrollable-element {
   scrollbar-color: dark;
 }
-/* .main {
-  margin-left: 160px; 
-  font-size: 28px; 
-  padding: 0px 10px;
-} */
 
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
+}
+
+.head{
+  font-size: 50px;
+  text-align: center;
+  color: aliceblue;
+}
+
+table{
+  position: fixed;
+  color: whitesmoke;
+  border: none;
+  padding:20px;
+  font-size: 20px;
+  left:0;
+  top:110px;
+}
+td{
+  padding:5px;
+}
+img{
+  display: inline-block;
+}
+
+img{
+ float:right;
+} 
+
+.navbar {
+  overflow: hidden;
+  background-color: black;
+  position: fixed;
+  bottom:200;
+  left:60;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar a:hover {
+  background: #f1f1f1;
+  color: #333;
+}
+
+.navbar a.active {
+  background-color: #4CAF50;
+  color: white;
 }

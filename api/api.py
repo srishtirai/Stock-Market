@@ -39,18 +39,38 @@ def result():
 	if(name+".csv" in companys):
 		df = pd.read_csv("C:/Users/RAI/Desktop/Final Project/Dataset/"+name+".csv")
 		msg=name
-		data = df[['Date','Open','High','Low','Close','Volume','VWAP']]
 		df_vwap = df[['Date','VWAP']]
 		df_vwap['Date'] = df_vwap['Date'].apply(pd.to_datetime)
-		name=df['Symbol'][1]
-		fig=plt.figure(figsize=(16,8)) 
-		plt.plot(df_vwap['VWAP'], label='VWAP') 
-		plt.title('VWAP visualization for the company : '+name) 
-		plt.xlabel("Time(year)") 
-		plt.ylabel("Volume Weighted Average Price") 
-		plt.legend(loc='best')
+		# df_vwap['year'] = df_vwap.Date.dt.year
+		# df_vwap['month'] = df_vwap.Date.dt.month
+		# df_vwap['day'] = df_vwap.Date.dt.day
+		# df_vwap['day of week'] = df_vwap.Date.dt.dayofweek
+		df_vwap.set_index('Date', inplace=True)
+		l=len(df)
+		l=l-1
+		cname=df['Symbol'][l]
+		open=df['Open'][l]
+		close=df['Close'][l]
+		prev=df['Prev Close'][l]
+		high=df['High'][l]
+		low=df['Low'][l]
+		volume=df['Volume'][l]/1000000
+		trades=df['Trades'][l]
+		turn=df['Turnover'][l]/1000000000
+		date=df['Date'][l]
+		fig, ax = plt.subplots()
+		ax.plot(df_vwap.loc['2020-4', 'VWAP'], linestyle='-')
+		plt.yticks([])
+		plt.xticks(fontsize=5)
+		# fig=plt.figure(figsize=(16,8)) 
+		# plt.title('Yearly Mean VWAP for '+name)
+		# plt.plot(df_vwap.loc['VWAP'], label='VWAP') 
+		# plt.title('VWAP visualization for the company : '+name) 
+		# plt.xlabel("Time(year)") 
+		# plt.ylabel("Volume Weighted Average Price") 
+		# plt.legend(loc='best')
 		fig.savefig('static/images/'+name+'1.png')
-		return render_template("result.html",msg=msg,name="static/images/"+name+"1.png")
+		return render_template("result.html",msg=open,name=name,turn=turn,open=open,close=close,prev=prev,high=high,low=low,vol=volume,trades=trades,img="static/images/"+name+"1.png")
 	else:
 		msg="The provided company data is not available"
 		return render_template("notavail.html",msg=msg)

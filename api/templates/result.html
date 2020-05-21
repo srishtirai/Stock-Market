@@ -2,11 +2,42 @@
 	<head>
 		<link rel="stylesheet" href="{{ url_for('static', filename='apps.css') }}">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	 </head>
+		<script type="text/javascript"
+		src="{{ url_for('static', filename='navigate.js') }}"></script>
+	</head>
 <body> 
 	<div class="main">
-	<p class="head">{{ msg }}</p> 
-	<img src={{name}}  height="500" width="800">
-	</div>>
+	<div class="head" >{{ name }}</div> 
+	<div>
+	<table>
+		<tr>
+			<td>Open</td><td>{{open}}</td>
+			<td>High</td><td>{{high}}</td>
+		</tr>
+		<tr>
+			<td>Close</td><td>{{close}}</td>
+			<td>Low</td><td>{{low}}</td>
+		</tr>
+		<tr>
+			<td>Prev Close</td><td>{{prev}}</td>
+			<td>Volume</td><td>{{vol}}M</td>
+		</tr>
+		<tr>
+			<td>Trades</td><td>{{trades}}</td>
+			<td>Turnover</td><td>{{turn}}B</td>
+		</tr>
+	</table>
+	<hr>
+	</div>
+	<div>
+	<img src={{img}} height="500" width="1000" id="image" name={{name}}>
+	</div></div>
+	<div class="navbar" >
+		<a id="1" onclick="changeImage(1)" class="active">1D</a>
+		<a id="2" onclick="changeImage(2)" class="" >5D</a>
+		<a id="3" onclick="changeImage(3)" class="" >1M</a>
+		<a id="4" onclick="changeImage(4)" class="" >1Y</a>
+		<a id="5" onclick="changeImage(5)" class="" >All</a>
+	</div>
 </body> 
 </html> 
