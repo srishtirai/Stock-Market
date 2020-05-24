@@ -137,3 +137,28 @@ img{
   color: #f1f1f1;
   font-size: 20px;;
 }
+
+.predict button{
+  background-color: gray;
+  border: none;
+  padding: 10px 10px;
+  text-align: center;
+  font-size: 20px;
+  margin: 4px 2px;
+  color: aliceblue;
+}
+.predict{
+  color: #f1f1f1;
+  position: fixed;
+  bottom: 10;
+  left:0;
+}
+
+.predict input{
+  font-size: 20px;
+  border-radius: 25px;
+  width: 200px;
+  height: 50px;
+  padding: 10px;
+  border: 1px solid #73AD21;
+}

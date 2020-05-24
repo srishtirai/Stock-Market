@@ -18,6 +18,8 @@ import warnings                   # To ignore the warnings
 import math
 from sklearn import preprocessing,svm
 from datetime import datetime as dt
+import datetime 
+import calendar
 warnings.filterwarnings("ignore")
 plt.style.use('dark_background')
 plt.show()
@@ -34,11 +36,32 @@ def index():
 		data.append (pd.read_csv("C:/Users/RAI/Desktop/Final Project/Dataset/"+file+".csv").tail(1))
 	return render_template("index.html",len=len(files),files=files,data=data)
 
+def day(last_date):
+	born = datetime.datetime.strptime(last_date, '%Y-%m-%d').weekday() 
+	day=calendar.day_name[born] 
+	j=0
+	if day=='Monday':
+		j=2
+	elif day=='Tuesday':
+		j=3
+	elif day=='Wednesday':
+		j=4
+	elif day=='Thursday':
+		j=5
+	elif day=='Friday':
+		j=6
+	elif day=='Saturday':
+		j=7
+	elif day=='Sunday':
+		j=1
+	return j
+
+
 def ValuePredictor(name):
 	df1 = pd.read_csv("C:/Users/RAI/Desktop/Final Project/Dataset/"+name+".csv")
 	forecast_col = 'Close'
 	df1.fillna(value=-99999, inplace=True)
-	forecast_out = int(math.ceil(0.01 * len(df1)))
+	forecast_out = 120
 	df1['forecast'] = df1[forecast_col].shift(-forecast_out)
 	small= df1[['Open','High','Low','Close','Volume']]
 	X=np.array(small)
@@ -54,16 +77,25 @@ def ValuePredictor(name):
 	forecast_set = clf.predict(X_lately)
 	df1['Forecast'] = np.nan
 	last_date = df1.iloc[-1].Date
+	j=day(last_date)
 	last_date=dt.strptime(last_date, '%Y-%m-%d').timestamp()
 	last_unix = last_date
 	one_day = 86400
 	next_unix = last_unix + one_day
+	l=len(df1)
 	for i in forecast_set:
 		next_date = dt.fromtimestamp(next_unix)
 		next_unix += 86400
-		df1.loc[next_date] = [np.nan for _ in range(len(df1.columns)-1)]+[i]
+		if(j<=5):
+			df1.loc[l,'Forecast'] = i
+			df1.loc[l,'Date']=next_date.date()
+			l=l+1
+		j=j+1
+		if(j==8):
+			j=1
 	fig5, ax = plt.subplots(figsize=(20,8))
-	df1.set_index('Date', inplace=True, drop=True)
+	df1.set_index('Date', inplace=True, drop=False)
+	df1.index = pd.to_datetime(df1.index)
 	df1['Close'].plot(color="blue")
 	df1['Forecast'].plot(color="red")
 	fig5.savefig('static/images/'+name+'5.png')
