@@ -15,6 +15,9 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVR
 from matplotlib.pyplot import figure
 import warnings                   # To ignore the warnings 
+import math
+from sklearn import preprocessing,svm
+from datetime import datetime as dt
 warnings.filterwarnings("ignore")
 plt.style.use('dark_background')
 plt.show()
@@ -31,6 +34,41 @@ def index():
 		data.append (pd.read_csv("C:/Users/RAI/Desktop/Final Project/Dataset/"+file+".csv").tail(1))
 	return render_template("index.html",len=len(files),files=files,data=data)
 
+def ValuePredictor(name):
+	df1 = pd.read_csv("C:/Users/RAI/Desktop/Final Project/Dataset/"+name+".csv")
+	forecast_col = 'Close'
+	df1.fillna(value=-99999, inplace=True)
+	forecast_out = int(math.ceil(0.01 * len(df1)))
+	df1['forecast'] = df1[forecast_col].shift(-forecast_out)
+	small= df1[['Open','High','Low','Close','Volume']]
+	X=np.array(small)
+	X = preprocessing.scale(X)
+	X_lately = X[-forecast_out:]
+	X = X[:-forecast_out]
+	df1.dropna(inplace=True)
+	y = np.array(df1['forecast'])
+	y = y.reshape((y.shape[0], 1))
+	X_train, X_test, y_train, y_test =train_test_split(X, y, test_size=0.2)
+	clf = RandomForestRegressor(n_jobs=-1)
+	clf.fit(X_train, y_train)
+	forecast_set = clf.predict(X_lately)
+	df1['Forecast'] = np.nan
+	last_date = df1.iloc[-1].Date
+	last_date=dt.strptime(last_date, '%Y-%m-%d').timestamp()
+	last_unix = last_date
+	one_day = 86400
+	next_unix = last_unix + one_day
+	for i in forecast_set:
+		next_date = dt.fromtimestamp(next_unix)
+		next_unix += 86400
+		df1.loc[next_date] = [np.nan for _ in range(len(df1.columns)-1)]+[i]
+	fig5, ax = plt.subplots(figsize=(20,8))
+	df1.set_index('Date', inplace=True, drop=True)
+	df1['Close'].plot(color="blue")
+	df1['Forecast'].plot(color="red")
+	fig5.savefig('static/images/'+name+'5.png')
+
+
 @app.route("/result",methods=["POST"])
 def result():
 	name=request.form.get("name")
@@ -41,10 +79,6 @@ def result():
 		msg=name
 		df_vwap = df[['Date','VWAP']]
 		df_vwap['Date'] = df_vwap['Date'].apply(pd.to_datetime)
-		# df_vwap['year'] = df_vwap.Date.dt.year
-		# df_vwap['month'] = df_vwap.Date.dt.month
-		# df_vwap['day'] = df_vwap.Date.dt.day
-		# df_vwap['day of week'] = df_vwap.Date.dt.dayofweek
 		df_vwap.set_index('Date', inplace=True)
 		l=len(df)
 		l=l-1
@@ -73,6 +107,7 @@ def result():
 		fig4, ax = plt.subplots(figsize=(20,8))
 		ax.plot(df_vwap['VWAP'], linestyle='-')
 		fig4.savefig('static/images/'+name+'4.png')
+		ValuePredictor(name) 
 		return render_template("result.html",msg=open,name=name,turn=turn,open=open,close=close,prev=prev,high=high,low=low,vol=volume,trades=trades,img="static/images/"+name+"1.png")
 	else:
 		msg="The provided company data is not available"
