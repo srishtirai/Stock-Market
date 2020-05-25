@@ -128,13 +128,13 @@ def result():
 		turn=df['Turnover'][l]/1000000000
 		date=df['Date'][l]
 		fig1, ax = plt.subplots(figsize=(20,8))
-		ax.plot(df_vwap.loc['2020-01-20':'2020-01-25', 'VWAP'], linestyle='-')
+		date1=df.iloc[-5].Date
+		ax.plot(df_vwap.loc[date1:date, 'VWAP'], linestyle='-')
 		plt.yticks([])
 		plt.xticks(fontsize=16)
-		plt.legend(loc='best')
 		fig1.savefig('static/images/'+name+'1.png')
 		fig2, ax = plt.subplots(figsize=(20,8))
-		ax.plot(df_vwap.loc['2020-3':'2020-4', 'VWAP'], linestyle='-')
+		ax.plot(df_vwap.loc['2020-4', 'VWAP'], linestyle='-')
 		fig2.savefig('static/images/'+name+'2.png')
 		fig3, ax = plt.subplots(figsize=(20,8))
 		ax.plot(df_vwap.loc['2020', 'VWAP'], linestyle='-')
