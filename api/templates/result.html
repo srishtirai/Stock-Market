@@ -40,10 +40,9 @@
 		<a id="5" onclick="changeImage(5)" class="" >Forecast</a>
 	</div>
 	<div class="predict">
-		<label>Provide date</label>"
-		<input name="date" placeholder="Y-m-d"/>
-		<button name="predict" onclick="Predict()">Predict</button>
-		<input name="predicted" />
+		{% for key,value in dict.items() %}
+		KEY:{{key}}Value:{{value}}
+		{% endfor %}
 	</div>
 </body> 
 </html> 

@@ -61,13 +61,13 @@ def ValuePredictor(name):
 	df1 = pd.read_csv("C:/Users/RAI/Desktop/Final Project/Dataset/"+name+".csv")
 	forecast_col = 'Close'
 	df1.fillna(value=-99999, inplace=True)
-	forecast_out = 120
-	df1['forecast'] = df1[forecast_col].shift(-forecast_out)
+	forecast_out = 60
+	df1['forecast'] = df1[forecast_col]
 	small= df1[['Open','High','Low','Close','Volume']]
 	X=np.array(small)
 	X = preprocessing.scale(X)
 	X_lately = X[-forecast_out:]
-	X = X[:-forecast_out]
+	X = X[:]
 	df1.dropna(inplace=True)
 	y = np.array(df1['forecast'])
 	y = y.reshape((y.shape[0], 1))
@@ -83,12 +83,15 @@ def ValuePredictor(name):
 	one_day = 86400
 	next_unix = last_unix + one_day
 	l=len(df1)
+	dict={}
 	for i in forecast_set:
 		next_date = dt.fromtimestamp(next_unix)
 		next_unix += 86400
 		if(j<=5):
 			df1.loc[l,'Forecast'] = i
 			df1.loc[l,'Date']=next_date.date()
+			d=next_date.date().strftime("%Y-%m-%d")
+			dict[d]=i
 			l=l+1
 		j=j+1
 		if(j==8):
@@ -99,7 +102,7 @@ def ValuePredictor(name):
 	df1['Close'].plot(color="blue")
 	df1['Forecast'].plot(color="red")
 	fig5.savefig('static/images/'+name+'5.png')
-
+	return dict
 
 @app.route("/result",methods=["POST"])
 def result():
@@ -139,8 +142,8 @@ def result():
 		fig4, ax = plt.subplots(figsize=(20,8))
 		ax.plot(df_vwap['VWAP'], linestyle='-')
 		fig4.savefig('static/images/'+name+'4.png')
-		ValuePredictor(name) 
-		return render_template("result.html",msg=open,name=name,turn=turn,open=open,close=close,prev=prev,high=high,low=low,vol=volume,trades=trades,img="static/images/"+name+"1.png")
+		dict=ValuePredictor(name) 
+		return render_template("result.html",msg=open,name=name,turn=turn,open=open,close=close,prev=prev,high=high,low=low,vol=volume,dict=dict,trades=trades,img="static/images/"+name+"1.png")
 	else:
 		msg="The provided company data is not available"
 		return render_template("notavail.html",msg=msg)
