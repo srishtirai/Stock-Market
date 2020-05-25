@@ -91,7 +91,7 @@ def ValuePredictor(name):
 			df1.loc[l,'Forecast'] = i
 			df1.loc[l,'Date']=next_date.date()
 			d=next_date.date().strftime("%Y-%m-%d")
-			dict[d]=i
+			dict[d]=round(i,4)
 			l=l+1
 		j=j+1
 		if(j==8):

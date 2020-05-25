@@ -34,15 +34,24 @@
 	</div></div>
 	<div class="navbar" >
 		<a id="1" onclick="changeImage(1)" class="active">5D</a>
-		<a id="2" onclick="changeImage(2)" class="" >1M</a>
-		<a id="3" onclick="changeImage(3)" class="" >1Y</a>
-		<a id="4" onclick="changeImage(4)" class="" >All</a>
-		<a id="5" onclick="changeImage(5)" class="" >Forecast</a>
+		<a id="2" onclick="changeImage(2)" class="not" >1M</a>
+		<a id="3" onclick="changeImage(3)" class="not" >1Y</a>
+		<a id="4" onclick="changeImage(4)" class="not" >All</a>
+		<a id="5" onclick="changeImage(5)" class="not" >Forecast</a>
 	</div>
 	<div class="predict">
+	<table class="scrolldown">
+		<tbody>
+			<tr id="head">
+				<td>Date</td><td>Closing value</td>
+			</tr>
 		{% for key,value in dict.items() %}
-		KEY:{{key}}Value:{{value}}
+		<tr>
+			<td>{{key}}</td><td>{{value}}</td>
+		</tr>
 		{% endfor %}
+		</tbody>
+	</table>
 	</div>
 </body> 
 </html> 
